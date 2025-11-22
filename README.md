@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TinyLink – URL Shortener
 
-## Getting Started
+TinyLink is a simple URL shortener built on top of Next.js (App Router) and Prisma.
+It lets you create short codes for long URLs, track clicks, and view basic stats per short link.
 
-First, run the development server:
+## Features
+
+- **Create short links** with custom codes (6–8 alphanumeric characters)
+- **Copy short URLs** to the clipboard with a single click
+- **Redirect** from `/[code]` to the original URL
+- **View all links** on the dashboard with:
+  - Original URL
+  - Created date
+  - Click count
+  - Last accessed time
+- **Validate codes in real time** (check if a short code is already taken)
+- **Delete links** from the dashboard
+
+## Tech Stack
+
+- **Framework:** Next.js (App Router, TypeScript)
+- **Database:** Prisma (via `@/lib/prisma`)
+- **Styling:** Tailwind CSS-style utility classes (via global styles)
+
+## Running the app
+
+From the `tinylink` directory:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open: <http://localhost:3000>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Make sure you have a valid Prisma configuration and database set up (see `prisma/schema.prisma`),
+and that you have run the Prisma migrations / `prisma db push` as needed.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key routes
 
-## Learn More
+### UI routes
 
-To learn more about Next.js, take a look at the following resources:
+- `/` – main dashboard listing all shortened links and a modal to create new links.
+- `/[code]` – resolves the `code` to the original URL and redirects or shows info.
+- `/code/[code]` – status/stats page for a specific short code.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### API routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `GET /api/links` – list all links.
+- `POST /api/links` – create a new link.
+  - Expected body: `{ originalUrl: string, code: string, lastAccessedAt?: string }`
+- `DELETE /api/links/:code` – delete a link by its short code.
+- `GET /api/links/check?code=XYZ` – check if a short code is available.
+- `GET /api/links/:code` – fetch stats for a given short code.
+- `GET /healthz` – health check endpoint
+- `GET /code` – redirect to the original URL
+- `GET /code/:code` – fetch stats for a given short code.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
