@@ -310,31 +310,31 @@ export default function Home() {
                   </button>
                 </div>
 
-                <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-start gap-2">
-                      <h2 className="text-sm font-semibold text-slate-900 sm:text-base">
+                <div className="mt-2 flex flex-col ">
+                  <div className="flex-1 min-w-0 max-w-full">
+                    <div className="flex items-start gap-2 max-w-full">
+                      <h2 className="text-sm font-semibold text-slate-900 sm:text-base break-all max-w-full">
                         {link.originalUrl}
                       </h2>
                     </div>
-                    <div className="mt-1 flex flex-wrap items-center gap-2 text-xs sm:text-sm">
-                      <span className="font-medium text-blue-600">
-                        <button
-                          type="button"
-                          className="underline-offset-2 hover:underline"
-                          onClick={() => handleVisitShortLink(link.shortUrl)}
-                        >
-                          {`${window.location.origin}/${link.shortUrl}`}
-                        </button>
-                      </span>
+                  </div>
+                  <div className="mt-1 flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+                    <span className="font-medium text-blue-600">
                       <button
                         type="button"
-                        onClick={() => handleCopyShortLink(link.shortUrl)}
-                        className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600 hover:bg-slate-100"
+                        className="underline-offset-2 hover:underline"
+                        onClick={() => handleVisitShortLink(link.shortUrl)}
                       >
-                        {copiedCode === link.shortUrl ? "Copied" : "Copy"}
+                        {`${window.location.origin}/${link.shortUrl}`}
                       </button>
-                    </div>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleCopyShortLink(link.shortUrl)}
+                      className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600 hover:bg-slate-100"
+                    >
+                      {copiedCode === link.shortUrl ? "Copied" : "Copy"}
+                    </button>
                   </div>
                 </div>
               </article>
